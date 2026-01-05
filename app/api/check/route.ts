@@ -22,18 +22,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const response = await fetch("https://api-inference.huggingface.co/models/nirmanpatel/llama-risk-compliant", {
+    const response = await fetch("https://router.huggingface.co/v1/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${HF_TOKEN}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        inputs: `<|system|>You are a legal compliance AI. Flag GDPR and ethical risks.</s><|user|>${text}</s><|assistant|>`,
-        parameters: {
-          max_new_tokens: 150,
-          temperature: 0.1
-        }
+        model: "nirmanpatel/llama-risk-compliant",
+        messages: [
+          { role: "system", content: "You are a legal compliance AI. Flag GDPR and ethical risks." },
+          { role: "user", content: text }
+        ],
+        max_tokens: 150,
+        temperature: 0.1
       })
     })
 
@@ -49,14 +51,14 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Handle Inference API response format (returns array or generated_text)
+    // Handle different response formats
     let advice = ""
-    if (Array.isArray(data) && data[0]?.generated_text) {
+    if (data.choices?.[0]?.message?.content) {
+      advice = data.choices[0].message.content
+    } else if (Array.isArray(data) && data[0]?.generated_text) {
       advice = data[0].generated_text
     } else if (data.generated_text) {
       advice = data.generated_text
-    } else if (data.choices?.[0]?.message?.content) {
-      advice = data.choices[0].message.content
     } else {
       advice = `Debug: ${JSON.stringify(data)}`
     }

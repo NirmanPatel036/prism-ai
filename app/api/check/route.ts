@@ -22,20 +22,19 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const response = await fetch("https://router.huggingface.co/v1/chat/completions", {
+    const response = await fetch("https://router.huggingface.co/hf-inference/models/nirmanpatel/llama-risk-compliant", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${HF_TOKEN}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "nirmanpatel/llama-risk-compliant",
-        messages: [
-          { role: "system", content: "You are a legal compliance AI. Flag GDPR and ethical risks." },
-          { role: "user", content: text }
-        ],
-        max_tokens: 150,
-        temperature: 0.1
+        inputs: `### Instruction: You are a legal compliance AI. Analyze the following text for GDPR violations, ethical risks, and legal concerns. Be concise.\n\n### Input: ${text}\n\n### Response:`,
+        parameters: {
+          max_new_tokens: 150,
+          temperature: 0.1,
+          return_full_text: false
+        }
       })
     })
 

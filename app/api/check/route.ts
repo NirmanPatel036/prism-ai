@@ -15,25 +15,51 @@ export async function POST(request: NextRequest) {
     const { text } = await request.json()
     const HF_TOKEN = process.env.HF_TOKEN
 
-    const response = await fetch("https://router.huggingface.co/v1/chat/completions", {
+    if (!HF_TOKEN) {
+      return NextResponse.json(
+        { error: "HF_TOKEN not configured", advice: "Server configuration error: Missing API token" },
+        { status: 500, headers: corsHeaders }
+      )
+    }
+
+    const response = await fetch("https://api-inference.huggingface.co/models/nirmanpatel/llama-risk-compliant", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${HF_TOKEN}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "nirmanpatel/llama-risk-compliant:auto",
-        messages: [
-          { "role": "system", "content": "You are a legal compliance AI. Flag GDPR and ethical risks." },
-          { "role": "user", "content": text }
-        ],
-        max_tokens: 150,
-        temperature: 0.1
+        inputs: `<|system|>You are a legal compliance AI. Flag GDPR and ethical risks.</s><|user|>${text}</s><|assistant|>`,
+        parameters: {
+          max_new_tokens: 150,
+          temperature: 0.1
+        }
       })
     })
 
     const data = await response.json()
-    const advice = data.choices?.[0]?.message?.content || "No response from model"
+    
+    // Debug: log the response structure
+    console.log("HF API Response:", JSON.stringify(data))
+
+    if (data.error) {
+      return NextResponse.json(
+        { error: data.error, advice: `API Error: ${data.error.message || data.error}` },
+        { status: 500, headers: corsHeaders }
+      )
+    }
+
+    // Handle Inference API response format (returns array or generated_text)
+    let advice = ""
+    if (Array.isArray(data) && data[0]?.generated_text) {
+      advice = data[0].generated_text
+    } else if (data.generated_text) {
+      advice = data.generated_text
+    } else if (data.choices?.[0]?.message?.content) {
+      advice = data.choices[0].message.content
+    } else {
+      advice = `Debug: ${JSON.stringify(data)}`
+    }
 
     return NextResponse.json({ advice }, { headers: corsHeaders })
   } catch (error) {

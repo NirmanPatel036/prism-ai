@@ -63,9 +63,9 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ advice }, { headers: corsHeaders })
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json(
-      { error: "Failed to reach AI model" },
+      { error: "Failed to reach AI model", advice: `Error: ${error?.message || String(error)}` },
       { status: 500, headers: corsHeaders }
     )
   }

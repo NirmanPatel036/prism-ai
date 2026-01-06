@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 # --- CONFIGURATION ---
-GEMINI_API_KEY = "AIzaSyDC_VjE7hEZZ1ocQcKV8HP26tsAgid3UD8"
+GEMINI_API_KEY = "YOUR KEY"
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # --- 1. SEED DATA CURATION ---

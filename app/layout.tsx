@@ -11,7 +11,12 @@ export const metadata: Metadata = {
   title: "Prism AI",
   description: "Risk Monitor & Law Compliance",
   icons: {
-    icon: '/logo.png',
+    icon: [
+      {
+        url: "/logo.png",
+        sizes: "any",
+      },
+    ],
   },
 };
 

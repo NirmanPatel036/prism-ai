@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            width: 380px; 
+            min-height: 600px;
+            padding: 0;
+            font-family: 'Roobert', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #1a1d29;
+            color: #ffffff;
+        }
+        
+        .container {
+            padding: 24px;
+            padding-bottom: 16px;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #2a2d3a;
+            padding: 8px;
+        }
+        
+        .title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        
+        .status-badge {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-card {
+            background: #252835;
+            border: 1px solid #2a2d3a;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .status-label {
+            font-size: 15px;
+            color: #a1a8b9;
+            font-weight: 500;
+        }
+        
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 26px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #3a3d4a;
+            transition: .3s;
+            border-radius: 26px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #1a1d29;
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        input:checked + .slider {
+            background-color: #22c55e;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(22px);
+            background-color: #ffffff;
+        }
+        
+        .info-text {
+            font-size: 13px;
+            color: #7b8394;
+            line-height: 1.6;
+            padding-top: 16px;
+            border-top: 1px solid #2a2d3a;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-box {
+            flex: 1;
+            background: #252835;
+            border: 1px solid #2a2d3a;
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: #7b8394;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .website-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .website-link:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+        
+        .website-icon {
+            font-size: 12px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to top, #1a1d29 0%, #252835 100%);
+            border-top: 1px solid rgba(42, 45, 58, 0.3);
+        }
+        
+        .footer-link {
+            color: #7b8394;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-link:hover {
+            color: #22c55e;
+        }
+        
+        .footer-emoji {
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+            font-size: 32px;
+            display: block;
+        }
+        
+        .font-size {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            background: #2a2d3a;
+            padding: 4px;
+            border-radius: 0;
+            border: 2px solid #3a3d4a;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 10px 16px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: #7b8394;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 0;
+            transition: all 0.2s;
+        }
+        
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .tab.active {
+            background: #1a1d29;
+            color: #22c55e;
+            border: 1px solid #22c55e;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Engine Info Card */
+        .engine-card {
+            background: #252835;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes borderGlow {
+            0%, 100% {
+                border-color: rgba(34, 197, 94, 0.3);
+                box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+            }
+            50% {
+                border-color: rgba(59, 130, 246, 0.3);
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+            }
+        }
+        
+        .engine-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .engine-badge {
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            color: #ffffff;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .engine-desc {
+            font-size: 13px;
+            color: #a1a8b9;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .praise-box {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 12px;
+        }
+        
+        .praise-text {
+            font-size: 12px;
+            color: #22c55e;
+            font-style: italic;
+            line-height: 1.5;
+        }
+        
+        .praise-author {
+            font-size: 11px;
+            color: #7b8394;
+            margin-top: 6px;
+            display: block;
+        }
+        
+        /* Health Check & Reset Layout */
+        .health-reset-container {
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Stats Reset Button */
+        .reset-btn {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .reset-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+        
+        .reset-icon {
+            display: none;
+        }
+        
+        .reset-text {
+            font-size: 11px;
+        }
+        
+        /* Feature Cards */
+        .feature-card {
+            background: #252835;
+            border: 1px solid #2a2d3a;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .feature-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .feature-icon {
+            font-size: 18px;
+        }
+        
+        .feature-desc {
+            font-size: 12px;
+            color: #a1a8b9;
+            line-height: 1.5;
+        }
+        
+        /* Tagline */
+        .tagline {
+            text-align: center;
+            padding: 20px 24px;
+            background: linear-gradient(to bottom, rgba(34, 197, 94, 0.05), rgba(59, 130, 246, 0.05));
+            border-top: 1px solid rgba(42, 45, 58, 0.3);
+            border-bottom: 1px solid rgba(42, 45, 58, 0.3);
+        }
+        
+        .tagline-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.3px;
+        }
+        
+        .tagline-subtext {
+            font-size: 11px;
+            color: #7b8394;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <img src="logo.png" alt="Prism AI" class="logo">
+                <div class="title">Prism AI</div>
+            </div>
+            <span class="status-badge" id="statusBadge">Inactive</span>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('monitor')">Monitor</button>
+            <button class="tab" onclick="switchTab('engine')">Engine</button>
+            <button class="tab" onclick="switchTab('info')">Info</button>
+        </div>
+        
+        <!-- Monitor Tab -->
+        <div class="tab-content active" id="monitor-tab">
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-number" id="alertCount">0</span>
+                    <span class="stat-label">Alerts</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number" id="scanCount">0</span>
+                    <span class="stat-label">Scans</span>
+                </div>
+            </div>
+            
+            <div class="status-card">
+                <div class="status-row">
+                    <span class="status-label">Real-time Protection</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggleStatus">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <p class="info-text">
+                    Monitoring for GDPR violations, PII leaks, and ethical concerns across all input fields.
+                </p>
+            </div>
+            
+            <div class="health-reset-container">
+                <a href="https://prism-ai-psi.vercel.app" target="_blank" class="website-link">
+                    <span class="website-icon">↗</span>
+                    Visit HomePage
+                </a>
+                <button class="reset-btn" id="resetStats">Reset Stats</button>
+            </div>
+        </div>
+        
+        <!-- Engine Tab -->
+        <div class="tab-content" id="engine-tab">
+            <div class="engine-card">
+                <div class="engine-title">
+                    Llama-3 Fine-tuned
+                    <span class="engine-badge">Risk AI</span>
+                </div>
+                <p class="engine-desc">
+                    Fine-tuned Llama-3 model for compliance risk detection, trained on three diverse datasets: <strong>lex_glue</strong> (legal reasoning), <strong>ai4privacy</strong> (PII detection), and <strong>anthropic/hh-rlhf</strong> (ethical alignment).
+                </p>
+                <div class="praise-box">
+                    <p class="praise-text">
+                        Training methodology combines legal expertise, privacy protection, and ethical AI principles to deliver comprehensive real-time compliance monitoring across GDPR, PII, and ethical frameworks.
+                    </p>
+                    <span class="praise-author">— nirmanpatel/llama-risk-compliant · HuggingFace Space 🤗</span>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <span class="feature-icon">🎯</span>
+                    Precision Detection
+                </div>
+                <p class="feature-desc">
+                    Advanced pattern recognition trained on 100K+ compliance scenarios
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <span class="feature-icon">⚡</span>
+                    Real-time Analysis
+                </div>
+                <p class="feature-desc">
+                    Sub-second response times with edge-optimized inference
+                </p>
+            </div>
+        </div>
+        
+        <!-- Info Tab -->
+        <div class="tab-content" id="info-tab">
+            <div class="feature-card">
+                <div class="feature-title">
+                    <span class="feature-icon">🛡️</span>
+                    GDPR Compliance
+                </div>
+                <p class="feature-desc">
+                    Real-time detection of data subject rights violations, consent issues, and lawful basis concerns
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <span class="feature-icon">🔒</span>
+                    PII Protection
+                </div>
+                <p class="feature-desc">
+                    Identifies sensitive personal information including names, emails, addresses, and financial data
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <span class="feature-icon">⚖️</span>
+                    Ethical AI
+                </div>
+                <p class="feature-desc">
+                    Monitors for bias, fairness issues, and ethical concerns in AI-generated content
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <span class="feature-icon">🌐</span>
+                    Multi-jurisdiction
+                </div>
+                <p class="feature-desc">
+                    Supports GDPR, CCPA, PIPEDA, and emerging global privacy regulations
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <span class="feature-icon">📊</span>
+                    Analytics Dashboard
+                </div>
+                <p class="feature-desc">
+                    Track compliance trends, alert patterns, and risk metrics over time
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <span class="feature-icon">🔄</span>
+                    Auto-update
+                </div>
+                <p class="feature-desc">
+                    Continuous model improvements based on latest regulatory changes
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tagline">
+        <div class="tagline-text">Building Trust Through Transparency</div>
+        <div class="tagline-subtext">Your privacy partner, earning loyalty one scan at a time</div>
+    </div>
+    
+    <div class="footer">
+        <a href="https://nirmanhere.vercel.app" target="_blank" class="footer-link">
+            <span class="footer-emoji">🛡️🔐</span>
+            <span class="font-size">About The Developer</span>
+        </a>
+    </div>
+    
+    <script src="popup.js"></script>
+
+</body>
+</html>

@@ -58,7 +58,7 @@ export default function Home() {
                   <Twitter className="w-4 h-4" />
                 </a>
                 <a
-                  href="https://github.com/NirmanPatel036"
+                  href="https://github.com/NirmanPatel036/prism-ai"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-foreground/40 hover:text-foreground/80 transition-colors"

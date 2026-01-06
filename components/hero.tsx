@@ -38,7 +38,7 @@ export function Hero() {
               [Hosted on Hugging Face]
             </Button>
           </Link>
-          <Link href="https://github.com/prism-ai" target="_blank">
+          <Link href="https://github.com/NirmanPatel036/prism-ai" target="_blank">
             <Button
               className="text-[10px] h-8 px-5 uppercase tracking-wider"
               onMouseEnter={() => setHovering(true)}

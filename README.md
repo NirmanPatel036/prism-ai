@@ -62,14 +62,14 @@ The system consists of:
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                         USER INTERACTION                            │
-│  Types text in any input field (Gmail, Slack, LinkedIn, etc.)      │
+│  Types text in any input field (Gmail, Slack, LinkedIn, etc.)       │
 └────────────────┬────────────────────────────────────────────────────┘
                  │
                  ▼
 ┌─────────────────────────────────────────────────────────────────────┐
 │                      CHROME EXTENSION                               │
-│  • Monitors input events (debounced 1s)                            │
-│  • Captures full text context (up to 3000 chars)                   │
+│  • Monitors input events (debounced 1s)                             │
+│  • Captures full text context (up to 3000 chars)                    │
 │  • Sends to API endpoint                                            │
 │  • Displays floating alert with copy button                         │
 └────────────────┬────────────────────────────────────────────────────┘
@@ -78,31 +78,31 @@ The system consists of:
 ┌─────────────────────────────────────────────────────────────────────┐
 │                    VERCEL API ROUTE (Optional)                      │
 │  • Next.js API endpoint with CORS                                   │
-│  • Proxies requests to Modal (or direct to Modal)                  │
+│  • Proxies requests to Modal (or direct to Modal)                   │
 └────────────────┬────────────────────────────────────────────────────┘
                  │ HTTPS POST
                  ▼
 ┌─────────────────────────────────────────────────────────────────────┐
 │                    MODAL SERVERLESS GPU                             │
-│  ┌───────────────────────────────────────────────────┐             │
-│  │  FastAPI Endpoint                                 │             │
-│  │  • Receives text                                  │             │
-│  │  • Formats Alpaca prompt                          │             │
-│  └───────────────┬───────────────────────────────────┘             │
-│                  │                                                   │
-│  ┌───────────────▼───────────────────────────────────┐             │
-│  │  vLLM Inference Engine (L4 GPU)                   │             │
-│  │  • Loads merged model from volume                 │             │
-│  │  • 4-bit quantization (BitsAndBytes)              │             │
-│  │  • Context window: 4096 tokens                    │             │
-│  │  • Sampling: temp=0.1, max_tokens=300             │             │
-│  └───────────────┬───────────────────────────────────┘             │
-│                  │                                                   │
-│  ┌───────────────▼───────────────────────────────────┐             │
-│  │  Modal Volume (Persistent Storage)                │             │
-│  │  • Merged Llama-3-8B model (~5GB)                 │             │
-│  │  • Instant cold starts (no download)              │             │
-│  └───────────────────────────────────────────────────┘             │
+│  ┌───────────────────────────────────────────────────┐              │
+│  │  FastAPI Endpoint                                 │              │
+│  │  • Receives text                                  │              │
+│  │  • Formats Alpaca prompt                          │              │
+│  └───────────────┬───────────────────────────────────┘              │
+│                  │                                                  │
+│  ┌───────────────▼───────────────────────────────────┐              │
+│  │  vLLM Inference Engine (L4 GPU)                   │              │
+│  │  • Loads merged model from volume                 │              │
+│  │  • 4-bit quantization (BitsAndBytes)              │              │
+│  │  • Context window: 4096 tokens                    │              │
+│  │  • Sampling: temp=0.1, max_tokens=300             │              │
+│  └───────────────┬───────────────────────────────────┘              │
+│                  │                                                  │
+│  ┌───────────────▼───────────────────────────────────┐              │
+│  │  Modal Volume (Persistent Storage)                │              │
+│  │  • Merged Llama-3-8B model (~5GB)                 │              │
+│  │  • Instant cold starts (no download)              │              │
+│  └───────────────────────────────────────────────────┘              │
 └────────────────┬────────────────────────────────────────────────────┘
                  │ JSON Response
                  ▼

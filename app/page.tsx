@@ -45,20 +45,28 @@ export default function Home() {
               <p className="font-mono text-[10px] text-foreground/40 max-w-xs leading-relaxed">
                 Precision monitoring for enterprise ethics and legal compliance. Risk Monitor v1.0
               </p>
+              <Link
+                href="/privacy-policy"
+                className="font-mono text-[9px] text-foreground/40 hover:text-foreground/60 transition-colors"
+              >
+                Privacy Policy
+              </Link>
             </div>
 
             <div className="flex flex-col items-center md:items-end gap-6">
               <div className="flex justify-center items-center gap-6">
                 <a
-                  href="https://twitter.com"
+                  href="https://x.com/nirman_patel_09?s=21"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-foreground/40 hover:text-foreground/80 transition-colors"
                 >
-                  <Twitter className="w-4 h-4" />
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
                 </a>
                 <a
-                  href="https://github.com/NirmanPatel036/prism-ai"
+                  href="https://github.com/NirmanPatel036"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-foreground/40 hover:text-foreground/80 transition-colors"

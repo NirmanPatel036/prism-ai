@@ -27,6 +27,8 @@ export function Hero() {
           every keystroke.
         </p>
 
+        <p className="font-mono text-[9px] text-foreground/40 mt-3">(Initial latency ~50s)</p>
+
         <div className="flex flex-wrap justify-center gap-4 mt-12 px-4">
           <Link href="https://huggingface.co/nirmanpatel/llama-risk-compliant" target="_blank">
             <Button

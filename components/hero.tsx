@@ -17,7 +17,7 @@ export function Hero() {
       <GL hovering={hovering} />
 
       <div className="text-center relative z-10">
-        <Pill className="mb-6">RISK MONITOR v1.0</Pill>
+        <Pill className="mb-6">RISK MONITOR v1.0.1</Pill>
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-sentient leading-[1.1] tracking-tight">
           Real-time Ethics & <br />
           <i className="font-light">Law</i> Compliance

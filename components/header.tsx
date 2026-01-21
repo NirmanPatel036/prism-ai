@@ -34,12 +34,14 @@ export const Header = () => {
             Contact
           </button>
         </nav>
-        <Link
+        <a
           className="uppercase max-lg:hidden transition-colors ease-out duration-150 font-mono text-[11px] text-primary hover:text-primary/80"
-          href="/#sign-in"
+          href="https://chromewebstore.google.com/detail/prism-ai/fdhcgjleiolajapeppcnaocahmgbddie?hl=en&authuser=0"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Launch Monitor
-        </Link>
+        </a>
         <MobileMenu />
       </header>
     </div>

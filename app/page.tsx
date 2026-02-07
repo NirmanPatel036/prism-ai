@@ -43,7 +43,7 @@ export default function Home() {
                 <span className="font-sentient text-base tracking-tighter">PrismAI</span>
               </Link>
               <p className="font-mono text-[10px] text-foreground/40 max-w-xs leading-relaxed">
-                Precision monitoring for enterprise ethics and legal compliance. Risk Monitor v1.0
+                Precision monitoring for enterprise ethics and legal compliance. Risk Monitor v1.0.5
               </p>
               <Link
                 href="/privacy-policy"
